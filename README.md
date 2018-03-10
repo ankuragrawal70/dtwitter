@@ -3,7 +3,7 @@
 Steps
 1) virtualenv -p python3 dtwitter_vir
 2) Create a database with appropriate name(eg- dtwitter)
-3) Change database values in local_settings.py (db_name, db_user, db_password, db_host) respectively.
+3) Change database values in test_settings.py (db_name, db_user, db_password, db_host) respectively.
 
 4)
 ----run----
