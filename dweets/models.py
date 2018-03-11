@@ -20,7 +20,7 @@ class Dweet(BaseModel):
 	
 	def get_data(self):
 		res = model_to_dict(self)
-		res['created_by'] = model_to_dict(self.created_by)
+		res['created_by'] = self.created_by.user.email
 		return res
 
 
@@ -34,8 +34,8 @@ class Comments(BaseModel):
 	
 	def get_data(self):
 		res = model_to_dict(self)
-		res['dweet'] = model_to_dict(self.dweet)
-		res['commented_by'] = model_to_dict(self.commented_by)
+		res['dweet'] = self.dweet.get_data()
+		res['commented_by'] = self.commented_by.user.email
 		return res
 
 
@@ -51,6 +51,6 @@ class Likes(BaseModel):
 	
 	def get_data(self):
 		res = model_to_dict(self)
-		res['dweet'] = model_to_dict(self.dweet)
-		res['liked_by'] = model_to_dict(self.liked_by)
+		res['dweet'] = self.dweet.get_data()
+		res['liked_by'] = self.liked_by.user.email
 		return res

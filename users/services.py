@@ -5,9 +5,12 @@ from rest_framework.authtoken.models import Token
 from django.utils import timezone
 from dtwitter import constants
 from users.models import UserProfile
-from datetime import datetime
+
 
 class RegisterAuthenticateService(object):
+	"""
+	view to register and authenticate user
+	"""
 	serializer_class = UserSerializer
 	
 	@classmethod
@@ -45,10 +48,18 @@ class RegisterAuthenticateService(object):
 	
 
 class TokenAuthenticateService(object):
+	"""
+	View to get and create token
+	"""
 	serializer_class = AuthTokenSerializer
 	expiration_seconds = constants.TOKEN_EXPIRY_TIME_IN_SECONDS
 	
 	def get_or_create_token(self, username, password):
+		"""
+		:param username:
+		:param password:
+		:return: Token is retrieved or created(if expired)
+		"""
 		success, errors = False, ''
 		result_data = {'success': success}
 		ser_ins = self.serializer_class(data={'username':username, 'password':password})
@@ -66,6 +77,11 @@ class TokenAuthenticateService(object):
 
 	@classmethod
 	def is_token_expired(cls, token):
+		"""
+		:param token:
+		:return: True if token is expired or False
+		expiruy time is set in settings.py with flag TOKEN_EXPIRY_TIME_IN_SECONDS
+		"""
 		token_creation_time = token.created
 		time_gap = timezone.now() - token_creation_time
 		if time_gap.seconds >= cls.expiration_seconds:
@@ -74,6 +90,10 @@ class TokenAuthenticateService(object):
 	
 	
 def get_user_profile(user_id):
+	"""
+	:param user_id:
+	:return: return user profile instance
+	"""
 	try:
 		return UserProfile.objects.get(id=user_id)
 	except Exception as e:

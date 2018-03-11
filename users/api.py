@@ -6,7 +6,18 @@ from users.authentication import UserTokenAuthentication
 
 
 class Register(APIView):
+	"""
+	API view to register a user
+	"""
 	def post(self, request, *args, **kwargs):
+		"""
+		:param request:
+		:param args:
+		:param kwargs:
+		:return: success or failure based on:
+		    success if user Registration is successful
+		    else error is returned
+		"""
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 		success, error = user_services.RegisterAuthenticateService.create_user(username=username, password=password)
@@ -17,7 +28,17 @@ class Register(APIView):
 
 
 class AuthenticateUser(APIView):
+	"""
+	API view to authenticate user
+	"""
 	def post(self, request, *args, **kwargs):
+		"""
+		:param request:
+		:param args:
+		:param kwargs:
+		:return: success is user is authenticated
+			else error
+		"""
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 		success, error = user_services.RegisterAuthenticateService.authenticate_user(username=username, password=password)
@@ -29,6 +50,12 @@ class AuthenticateUser(APIView):
 
 class AuthToken(APIView):
 	def post(self, request, *args, **kwargs):
+		"""
+		:param request:
+		:param args:
+		:param kwargs:
+		:return: return auth token to user which have some expiry time set in setting.py
+		"""
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 		token_service = user_services.TokenAuthenticateService()
@@ -39,10 +66,16 @@ class AuthToken(APIView):
 
 
 class SearchTweeter(APIView):
+	"""
+	API view to search dweeter
+	"""
 	authentication_classes = (UserTokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
 	
 
 class FollowTweeter(APIView):
+	"""
+	API view to follow dweeter
+	"""
 	authentication_classes = (UserTokenAuthentication,)
 	permission_classes = (IsAuthenticated,)

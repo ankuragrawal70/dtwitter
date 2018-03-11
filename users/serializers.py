@@ -4,12 +4,11 @@ from django.db import models, transaction
 from users.models import UserProfile
 
 
-class UserAlreadyExistsExceptions(Exception):
-	pass
-
 
 class UserSerializer(serializers.ModelSerializer):
-	
+	"""
+	Simple user serializer to validate all user details
+	"""
 	def to_internal_value(self, data):
 		result = super(UserSerializer, self).to_internal_value(data)
 		result['email'] = result['username']
