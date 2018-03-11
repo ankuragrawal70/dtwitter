@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import model_to_dict
 
 
 class SerializedResponse(object):
@@ -16,7 +17,7 @@ class SerializedResponse(object):
 			if isinstance(self.data, dict):
 				return self.data.__dict__
 			if isinstance(self.data, self.model_class):
-				return self.model_class
+				return model_to_dict(self.data)
 		return self.data
 	
 	def get_errors(self):
