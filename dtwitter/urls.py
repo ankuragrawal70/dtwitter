@@ -20,5 +20,6 @@ from django.contrib import admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^users/', include('users.urls', namespace="users"))
+    url(r'^users/', include('users.urls', namespace="users")),
+    url(r'^api/v1/dweets/', include('dweets.urls', namespace="dweets"))
 ]

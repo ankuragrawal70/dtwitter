@@ -10,8 +10,8 @@ class BaseModel(models.Model):
 	This model can be inherited in every other model to reuse
 	the time stamp and active status
 	"""
-	created_date = models.DateTimeField(editable=False)
-	modified_date = models.DateTimeField()
+	created_date = models.DateTimeField(default=datetime.now(), editable=False)
+	modified_date = models.DateTimeField(blank=True)
 	is_active = models.BooleanField(default=True)
 	
 	# This will filter out is_active = False
@@ -29,7 +29,7 @@ class BaseModel(models.Model):
 		:param kwargs:
 		:return: override save method to generate created and modified date
 		"""
-		if not self.pk:
+		if not self.pk and not self.created_date:
 			self.created_date = datetime.now()
 		self.modified_date = datetime.now()
 		return super(BaseModel, self).save(*args, **kwargs)

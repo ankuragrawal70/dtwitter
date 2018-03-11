@@ -9,9 +9,6 @@ class UserAlreadyExistsExceptions(Exception):
 
 
 class UserSerializer(serializers.ModelSerializer):
-	email = models.EmailField(unique=True, error_messages={
-		'unique': "A user with that email already exists.",
-	},)
 	
 	def to_internal_value(self, data):
 		result = super(UserSerializer, self).to_internal_value(data)

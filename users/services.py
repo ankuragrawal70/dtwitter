@@ -6,11 +6,18 @@ from django.utils import timezone
 from dtwitter import constants
 from users.models import UserProfile
 
+
 class RegisterAuthenticateService(object):
 	serializer_class = UserSerializer
 	
 	@classmethod
 	def create_user(cls, username, password):
+		"""
+		:param username:
+		:param password:
+		:return: if username and password are valid (no other user exists of the same email).
+		We will create a valid user
+		"""
 		serializer_ins = cls.serializer_class(data={'username':username, 'password': password})
 		success, error = False, ''
 		if serializer_ins.is_valid():
@@ -25,6 +32,11 @@ class RegisterAuthenticateService(object):
 	
 	@staticmethod
 	def authenticate_user(username, password):
+		"""
+		:param username:
+		:param password:
+		:return: authenticate username and password
+		"""
 		user_ins = authenticate(username=username, password=password)
 		if user_ins:
 			return True, ''
@@ -55,8 +67,7 @@ class TokenAuthenticateService(object):
 	@classmethod
 	def is_token_expired(cls, token):
 		token_creation_time = token.created
-		current_time = timezone.now()
-		time_gap = current_time - token_creation_time
+		time_gap = timezone.now() - token_creation_time
 		if time_gap.seconds >= cls.expiration_seconds:
 			return True
 		return False

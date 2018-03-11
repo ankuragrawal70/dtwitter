@@ -9,3 +9,11 @@ Steps
 ----run----
 pip install -r requirements.txt
 
+
+5)
+----run---
+python manage.py migrate
+
+
+
+

@@ -1,4 +1,4 @@
-db_name, db_user, db_password, db_host = "dtwitter", "root", "root", "localhost"
+db_name, db_user, db_password, db_host = "dwitter", "root", "root", "localhost"
 
 DATABASES = {
     'default': {

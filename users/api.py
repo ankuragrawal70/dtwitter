@@ -7,7 +7,7 @@ from users.authentication import UserTokenAuthentication
 
 class Register(APIView):
 	def post(self, request, *args, **kwargs):
-		username = request.POST.get('ClientId')
+		username = request.POST.get('username')
 		password = request.POST.get('password')
 		success, error = user_services.RegisterAuthenticateService.create_user(username=username, password=password)
 		if success:
@@ -29,7 +29,7 @@ class AuthenticateUser(APIView):
 
 class AuthToken(APIView):
 	def post(self, request, *args, **kwargs):
-		username = request.POST.get('ClientId')
+		username = request.POST.get('username')
 		password = request.POST.get('password')
 		token_service = user_services.TokenAuthenticateService()
 		result_data = token_service.get_or_create_token(username, password)
