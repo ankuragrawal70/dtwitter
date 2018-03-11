@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from django.utils import timezone
 from dtwitter import constants
 from users.models import UserProfile
-
+from datetime import datetime
 
 class RegisterAuthenticateService(object):
 	serializer_class = UserSerializer

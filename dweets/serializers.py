@@ -5,14 +5,6 @@ import traceback
 
 
 class DweetSerializer(serializers.ModelSerializer):
-	content = serializers.CharField(
-		max_length=100, validators=[SimpleTweetValidator],
-		help_text="Please enter a valid tweet of maximum 100 length character",
-		allow_blank=False,
-		error_messages={
-			'unique': "A tweet aleady exists.",
-		},
-	)
 	
 	def create(self, validated_data):
 		try:
