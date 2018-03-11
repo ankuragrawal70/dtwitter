@@ -30,7 +30,9 @@ class Comments(BaseModel):
 	"""
 	dweet = models.ForeignKey(Dweet, on_delete=models.CASCADE, related_name="commented_dweet")
 	commented_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="commented_by")
-	content = models.TextField(blank=False)
+	content = models.TextField(blank=False, error_messages={
+			'blank': "Comment text can not be blank. Pleas enter valid content",
+		},)
 	
 	def get_data(self):
 		res = model_to_dict(self)

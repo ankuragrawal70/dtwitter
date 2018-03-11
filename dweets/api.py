@@ -24,7 +24,7 @@ class AddTweet(APIView):
 		
 		"""
 		user_profile = request.user.profile
-		dweet_content = request.POST['dweet_content']
+		dweet_content = request.POST.get('dweet_content', "")
 		ser = self.service_class(dweet_content=dweet_content, user_profile=user_profile)
 		response = ser.validate_and_add_dweet()
 		return Response({
@@ -80,8 +80,8 @@ class CommentsTweet(APIView):
 			data contains dweet info with current posted comment info
 		"""
 		user_profile = request.user.profile
-		dweet_id = request.POST['dweet_id']
-		comment = request.POST['comment_text']
+		dweet_id = request.POST.get('dweet_id')
+		comment = request.POST.get('comment_text', '')
 		ser = self.service_class(dweet_id=dweet_id, user_profile=user_profile, comment_text=comment)
 		response = ser.add_comment_on_tweet()
 		return Response({
