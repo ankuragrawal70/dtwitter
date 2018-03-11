@@ -22,8 +22,8 @@ class AddTweet(APIView):
 		all the validations are checked if tweet content and user is valid.
 		"""
 		user_profile = request.user.profile
-		tweet_content = request.POST['tweet_content']
-		ser = self.service_class(tweet_content=tweet_content, user_profile=user_profile)
+		dweet_content = request.POST['dweet_content']
+		ser = self.service_class(dweet_content=dweet_content, user_profile=user_profile)
 		response = ser.validate_and_add_dweet()
 		return Response({
 			'success': response.get_success(),
@@ -35,12 +35,13 @@ class AddTweet(APIView):
 class LikeTweet(APIView):
 	authentication_classes = (UserTokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
+	service_class = services.DweetService
 	
 	def post(self, request, *args, **kwargs):
 		user_profile = request.user.profile
-		tweet_content = request.POST['tweet_id']
-		ser = self.service_class(tweet_content=tweet_content, user_profile=user_profile)
-		response = ser.validate_and_add_dweet()
+		dweet_id = request.POST['dweet_id']
+		ser = self.service_class(dweet_id=dweet_id, user_profile=user_profile)
+		response = ser.like_tweet()
 		return Response({
 			'success': response.get_success(),
 			'errors': response.get_errors(),
@@ -51,6 +52,19 @@ class LikeTweet(APIView):
 class CommentsTweet(APIView):
 	authentication_classes = (UserTokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
+	service_class = services.DweetService
+	
+	def post(self, request, *args, **kwargs):
+		user_profile = request.user.profile
+		dweet_id = request.POST['dweet_id']
+		comment = request.POST['comment_text']
+		ser = self.service_class(dweet_id=dweet_id, user_profile=user_profile, comment_text=comment)
+		response = ser.add_comment_on_tweet()
+		return Response({
+			'success': response.get_success(),
+			'errors': response.get_errors(),
+			'data': response.get_data()}
+		)
 
 
 class SearchTweets(APIView):
