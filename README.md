@@ -15,5 +15,16 @@ pip install -r requirements.txt
 python manage.py migrate
 
 
+6) API url is as follow:
+https://www.getpostman.com/collections/8232cceebed11a7cc160
+
+7) Way to access the APIs:
+Steps:
+(i) Register User using resgister API
+(ii) GET auth token using token API.
+(iii) Access APIs to create tweet, create comment and create likes
+
+
+
 
 
