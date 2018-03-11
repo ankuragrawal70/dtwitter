@@ -1,7 +1,6 @@
 from dweets.dto import SerializedResponse
 from users import services as users_services
 from dweets.serializers import DweetSerializer, DweetLikesSerializer, DweetCommentsSerializer
-from dweets import models as dweet_models
 
 
 class DweetService(object):

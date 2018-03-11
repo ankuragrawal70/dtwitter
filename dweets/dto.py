@@ -7,17 +7,17 @@ class SerializedResponse(object):
 		self.success = success
 		self.data = data
 		self.errors = errors
-		self.model_class = model_class or models.Model
-	
+		
 	def get_success(self):
 		return self.success
 	
 	def get_data(self):
-		if self.data:
-			if isinstance(self.data, dict):
-				return self.data.__dict__
-			if isinstance(self.data, self.model_class):
-				return model_to_dict(self.data)
+		if isinstance(self.data, dict):
+			return self.data.__dict__
+		if hasattr(self.data, 'get_data'):
+			return self.data.get_data()
+		if isinstance(self.data, models.Model):
+			return model_to_dict(self.data)
 		return self.data
 	
 	def get_errors(self):
