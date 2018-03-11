@@ -23,7 +23,7 @@ class Comments(BaseModel):
 	model for all the comments for a particular dweet and by a particular user
 	"""
 	dweet = models.ForeignKey(Dweet, on_delete=models.CASCADE, related_name="commented_dweet")
-	created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="commented_by")
+	commented_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="commented_by")
 	content = models.TextField(blank=False)
 	
 
@@ -32,6 +32,8 @@ class Likes(BaseModel):
 		model for all the likes for a particular dweet and by a particular user
 	"""
 	dweet = models.ForeignKey(Dweet, on_delete=models.CASCADE, related_name="liked_dweet")
-	created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="liked_by")
+	liked_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="liked_by")
 	
+	class Meta:
+		unique_together = ('dweet', 'liked_by')
 

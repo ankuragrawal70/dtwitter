@@ -1,7 +1,7 @@
 from dweets.dto import SerializedResponse
 from users import services as users_services
 from dweets.serializers import DweetSerializer
-
+from dweets import models as dweet_models
 
 class DweetService(object):
 	"""
@@ -10,8 +10,9 @@ class DweetService(object):
 	"""
 	serializer = DweetSerializer
 	
-	def __init__(self,  tweet_content, user_id=None, user_profile=None):
-		self.tweet_content = tweet_content
+	def __init__(self, dweet_content=None, dweet_id=None, user_id=None, user_profile=None):
+		self.dweet_content = dweet_content
+		self.dweet_id = dweet_id
 		self.user = self.get_user_profile(user_id, user_profile)
 	
 	@staticmethod
@@ -27,7 +28,7 @@ class DweetService(object):
 		if dweet is valid to be added then new dweet will be added else error will be generated
 		and response object will be returned with the state(success, data and errors)
 		"""
-		ser_ins = self.serializer(data={"created_by": self.user.id, 'content': self.tweet_content})
+		ser_ins = self.serializer(data={"created_by": self.user.id, 'content': self.dweet_content})
 		response = SerializedResponse()
 		if ser_ins.is_valid():
 			try:
@@ -38,3 +39,11 @@ class DweetService(object):
 		else:
 			response.errors = ser_ins.errors
 		return response
+	
+	def add_likes(self):
+		assert self.dweet_id, "Please gave a tweet to be liked"
+		get_dweet =  get_dweet_from_dweet_id(self.dweet_id)
+		
+		
+def get_dweet_from_dweet_id(dweet_id):
+	return dweet_models.Dweet.objects.get(id=dweet_id)
