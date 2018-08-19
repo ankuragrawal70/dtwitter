@@ -1,4 +1,5 @@
 # dtwitter
+Basic Twitter API data.
 
 Steps
 1) virtualenv -p python3 dtwitter_vir
